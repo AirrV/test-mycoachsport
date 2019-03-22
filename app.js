@@ -8,9 +8,11 @@ function startNewGame(opponent) {
 
 function game(el) {
   if ( !el ) {
-    whoWins( randomCPU(), randomCPU() )
+    whoWins( "CPU2", randomCPU(), randomCPU() )
   }else {
-    whoWins( el, randomCPU() )
+    document.getElementById("choice").innerHTML = el
+    let CPUchoice = randomCPU()
+    whoWins( "player", el, CPUchoice )
   }
 }
 
@@ -19,14 +21,14 @@ function randomCPU () {
   return elements[id]
 }
 
-function whoWins (str1, str2)  {
+function whoWins (player, str1, str2)  {
   let result
   if (str1 === str2){
     result = 'Deuce'
   } else if (( str1 === 'rock' && str2 === 'scissors' )
       || ( str1 === 'scissors' && str2 === 'paper' )
       || ( str1 === 'paper' && str2 === 'rock' )) {
-    result = 'P1 wins'
+    result = player + 'wins'
   } else {
     result = 'CPU wins'
   }
@@ -40,7 +42,6 @@ const onePlayerScreenContent = name => {
 
   return (`<div>
     <p>Name of the player : ${name}</p>
-    <p>Choice</p>
     <button id='rock' name='rock' ${disabled} onclick="game('rock')">Rock</button>
     <button id='paper' name='paper' ${disabled} onclick="game('paper')">Paper</button>
     <button id='scissors' name='scissors' ${disabled} onclick="game('scissors')">
@@ -58,6 +59,7 @@ const homePage = `<div>
     <button id="playerVsCpu">Player VS CPU</button>
     <button id="cpuVsCpu">CPU VS CPU</button>
     <div id="onePlayerScreen"></div>
+    <div id="choice">Choice</div>
     <div id="CPUScreen"></div>
     <div id="winner"></div>
   </div>`
