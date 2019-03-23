@@ -2,18 +2,26 @@ const mainDiv = document.getElementById('main');
 const elements = ["rock", "paper", "scissors"]
 
 function startNewGame(opponent) {
-  document.getElementById("onePlayerScreen").innerHTML = onePlayerScreenContent(opponent)
-  document.getElementById("CPUScreen").innerHTML = onePlayerScreenContent("CPU")
+  onePlayerScreen.innerHTML = onePlayerScreenContent(opponent)
+  CPUScreen.innerHTML = onePlayerScreenContent("CPU")
 }
 
 function game(el) {
+
   if ( !el ) {
-    whoWins( "CPU2", randomCPU(), randomCPU() )
+    let CPUchoice = randomCPU();
+    let CPU2choice = randomCPU();
+    document.getElementById("choice").innerHTML = CPU2choice
+    document.getElementById("CPUchoice").innerHTML = CPUchoice
+    whoWins( "CPU2", CPU2choice, CPUchoice )
+
   }else {
-    document.getElementById("choice").innerHTML = el
     let CPUchoice = randomCPU()
-    whoWins( "player", el, CPUchoice )
+    document.getElementById("choice").innerHTML = el
+    document.getElementById("CPUchoice").innerHTML = CPUchoice
+    whoWins( "Player", el, CPUchoice )
   }
+
 }
 
 function randomCPU () {
@@ -22,16 +30,28 @@ function randomCPU () {
 }
 
 function whoWins (player, str1, str2)  {
-  let result
+  let result;
+  let iStr1 = elements.indexOf(str1);
+  let iStr2 = elements.indexOf(str2);
+
   if (str1 === str2){
     result = 'Deuce'
-  } else if (( str1 === 'rock' && str2 === 'scissors' )
-      || ( str1 === 'scissors' && str2 === 'paper' )
-      || ( str1 === 'paper' && str2 === 'rock' )) {
-    result = player + 'wins'
+
+  } else if ( iStr1 % 2 === iStr2 % 2 ) {
+    if ( iStr1 < iStr2 ) {
+      result = player + ' wins'
+    } else {
+      result = 'CPU wins'
+    }
+
   } else {
-    result = 'CPU wins'
+    if ( iStr1 < iStr2 ) {
+      result = 'CPU wins'
+    } else {
+      result = player + ' wins'
+    }
   }
+  
   document.getElementById("winner").innerHTML = result;
 }
 
@@ -56,17 +76,21 @@ const onePlayerScreenContent = name => {
 
 const homePage = `<div>
     <h1>The great Tournament</h1>
+    <h3>For My Coach Sport</h3>
     <button id="playerVsCpu">Player VS CPU</button>
     <button id="cpuVsCpu">CPU VS CPU</button>
-    <div id="onePlayerScreen"></div>
-    <div id="choice">Choice</div>
     <div id="CPUScreen"></div>
+    <div id="CPUchoice"></div>
+    <div id="onePlayerScreen"></div>
+    <div id="choice"></div>
     <div id="winner"></div>
   </div>`
 
 document.addEventListener("DOMContentLoaded", () => {
-  let modePlayer = document.getElementById("playerVsCpu")
-  let modeCpu = document.getElementById("cpuVsCpu")
+  let modePlayer = document.getElementById("playerVsCpu");
+  let modeCpu = document.getElementById("cpuVsCpu");
+  let onePlayerScreen = document.getElementById("onePlayerScreen");
+  let CPUScreen = document.getElementById("CPUScreen")
 
   modePlayer.addEventListener('click', () => {
     startNewGame("human")
