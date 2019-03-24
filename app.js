@@ -33,8 +33,8 @@ function game(el) {
 
   } else {
     let CPUchoice = randomCPU()
-    document.getElementById("choice").innerHTML = el
-    document.getElementById("CPUchoice").innerHTML = CPUchoice
+    document.getElementById("choice").innerHTML = `<p>${el}</p>`
+    document.getElementById("CPUchoice").innerHTML = `<p>${CPUchoice}</p>`
     whoWins( playerName, el, CPUchoice )
   }
 
@@ -110,7 +110,8 @@ function eraseAllData() {
 
 const CPUScreenHTML = `<div>
     <p>Opponent</p>
-    <div id="scoreCPU">0</div>
+    <button style="visibility:hidden; line-height:1.5"></button>
+    <div id="scoreCPU" class="scores">0</div>
   </div>`
 
 const onePlayerScreenContent = (type) => {
@@ -140,29 +141,47 @@ const onePlayerScreenContent = (type) => {
     <button id='random' name='random' style="display: ${randomDisplay}" onclick="game()">
       GO !
     </button>
-    <div id="score">0</div>
+    <div id="score" class="scores">0</div>
   </div>`
   );
 }
 
 const homePage = `<div>
     <div id="upperBar">
-    <h1>The great Tournament</h1>
-    <button id="restart" onclick="eraseAllData()">Restart from zero</button>
+      <h1>The great Tournament</h1>
+      <h3>For 
+        <a href="https://www.mycoachsport.com/fr/">
+          <img src="./logo-mycoachsport.png" alt="My coach sport" />
+        </a>
+      </h3>
     </div>
-    <h3>For My Coach Sport</h3>
-    <div id="playerNameHTML"></div>
-    <p>Total games played: <span id="spanPlayedGames">0</span></p>
-    <p>Total games won: <span id="spanWonGames">0</span></p>
-    <p>Ratio: <span id="spanRatio"></span> %</p>
-    <p>You can choose to play yourself or let a computer fight on your behalf :</p>
-    <button id="playerVsCpu">I will handle it myself</button>
-    <button id="cpuVsCpu">Let's see what this machine can do</button>
-    <div id="onePlayerScreen"></div>
-    <div id="choice"></div>
-    <div id="CPUScreen"></div>
-    <div id="CPUchoice"></div>
-    <div id="winner"></div>
+
+    <div id="typeSelector">
+      <p>You can choose to play yourself or let a computer fight on your behalf :</p>
+      <button id="playerVsCpu">I will handle it myself</button>
+      <button id="cpuVsCpu">Let's see what this machine can do</button>
+    </div>
+
+    <div id="gamingZone">
+      <div class="playerScreen">
+        <div id="choice" class="chosenElement"></div>
+        <div id="onePlayerScreen" ></div>
+      </div>
+      <div class="playerScreen">
+        <div id="CPUchoice" class="chosenElement"></div>
+        <div id="CPUScreen"></div>
+      </div>
+      <div id="winner"></div>
+    </div>
+
+    <div id="statistics">
+      <div id="playerNameHTML"></div>
+      <p>Total games played: <span id="spanPlayedGames">0</span></p>
+      <p>Total games won: <span id="spanWonGames">0</span></p>
+      <p>Ratio: <span id="spanRatio"></span> %</p>
+      <button id="restart" onclick="eraseAllData()">Restart from zero</button>
+    </div>
+
   </div>`
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -181,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if ( localStorage.getItem("storedPlayerName")) {
     playerName = localStorage.getItem("storedPlayerName");
-    window.alert("Welcome back " + playerName + " !");
+//    window.alert("Welcome back " + playerName + " !");
     document.getElementById("playerNameHTML").innerHTML = playerName + "'s games stats"
 
     if ( localStorage.getItem("storedPlayedGames")) {

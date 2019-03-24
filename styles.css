@@ -1,0 +1,73 @@
+html, body {
+  color: white;
+  background-image: url("./bg-img.jpg");
+  background-size: cover;
+}
+
+#upperBar {
+  text-align: center;
+}
+
+#typeSelector {
+  text-align: center;
+  margin: 4%;
+}
+
+#gamingZone {
+  text-align: center;
+  min-height: 40vh;
+}
+
+#winner {
+  font-size: 1.3rem;
+}
+
+#statistics {
+  text-align: center
+}
+
+.playerScreen {
+  display: inline-block;
+  vertical-align: start;
+  margin: 2% 5% 0 5%;
+  align-items: start;
+  min-width: 235px;
+}
+
+.scores {
+  line-height: 2;
+  font-size: 2rem;
+}
+
+.chosenElement {
+  margin: auto;
+  border: solid 2px;
+  border-color: white;
+  width: 10vw;
+  min-width: 100px;
+  height: 10vh;
+  min-height: 70px;
+}
+
+.chosenElement > p {
+  justify-self: center;
+}
+
+button {
+  color: white;
+  text-align: center;
+  background-color: #b90404;
+  letter-spacing: 2px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 4px;
+  position: relative;
+  z-index: 2;
+}
+
+img {
+  width: 10vw;
+  height: auto;
+  margin-left: 5px;
+  vertical-align: bottom;
+}
