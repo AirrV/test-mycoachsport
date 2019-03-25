@@ -1,56 +1,60 @@
-const mainDiv = document.getElementById('main');
-const elements = ["rock", "paper", "scissors"];
+const mainDiv = document.getElementById( 'main' );
+const elements = [ "rock", "paper", "scissors" ];
 let playedGames = 0;
 let wonGames = 0;
 let gamesRatio = "";
 let scoreOpponent;
 let scoreCPU;
 
-function startNewGame(opponent) {
-  console.log("player", localStorage.getItem("storedPlayerName"))
-  scoreOpponent = 0;
-  scoreCPU = 0;
-  onePlayerScreen.innerHTML = onePlayerScreenContent(opponent);
-  CPUScreen.innerHTML = CPUScreenHTML;
+function eraseAllData() {
+  localStorage.clear();
+  document.location.reload( true );
 }
 
 function reset() {
   onePlayerScreen.innerHTML = "";
   CPUScreen.innerHTML = "";
-  document.getElementById("choice").innerHTML = "";
-  document.getElementById("CPUchoice").innerHTML = "";
-  document.getElementById("winner").innerHTML = "";
+  document.getElementById( "choice" ).innerHTML = "";
+  document.getElementById( "CPUchoice" ).innerHTML = "";
+  document.getElementById( "winner" ).innerHTML = "";
 }
 
-function game(el) {
+function startNewGame( opponent ) {
+  scoreOpponent = 0;
+  scoreCPU = 0;
+  onePlayerScreen.innerHTML = onePlayerScreenContent( opponent );
+  CPUScreen.innerHTML = CPUScreenHTML;
+}
+
+function game( el ) {
 
   if ( !el ) {
     let CPUchoice = randomCPU();
     let CPU2choice = randomCPU();
-    document.getElementById("choice").innerHTML = CPU2choice
-    document.getElementById("CPUchoice").innerHTML = CPUchoice
+    document.getElementById( "choice" ).innerHTML = CPU2choice
+    document.getElementById( "CPUchoice" ).innerHTML = CPUchoice
     whoWins( playerName + "'s computer", CPU2choice, CPUchoice )
 
   } else {
     let CPUchoice = randomCPU()
-    document.getElementById("choice").innerHTML = `<p>${el}</p>`
-    document.getElementById("CPUchoice").innerHTML = `<p>${CPUchoice}</p>`
+    document.getElementById( "choice" ).innerHTML = `<p>${ el }</p>`
+    document.getElementById( "CPUchoice" ).innerHTML = `<p>${ CPUchoice }</p>`
     whoWins( playerName, el, CPUchoice )
   }
 
 }
 
 function randomCPU () {
-  let id = Math.floor(Math.random() * elements.length)
-  return elements[id]
+  let id = Math.floor( Math.random() * elements.length )
+  return elements[ id ]
 }
 
-function whoWins (player, str1, str2)  {
+function whoWins ( player, str1, str2 )  {
   let result;
-  let iStr1 = elements.indexOf(str1);
-  let iStr2 = elements.indexOf(str2);
+  let iStr1 = elements.indexOf( str1 );
+  let iStr2 = elements.indexOf( str2 );
 
-  if (str1 === str2){
+  if ( str1 === str2 ){
     result = 'Deuce'
 
   } else if ( iStr1 % 2 === iStr2 % 2 ) {
@@ -72,40 +76,35 @@ function whoWins (player, str1, str2)  {
     }
   }
   
-  document.getElementById("scoreCPU").innerHTML = scoreCPU
-  document.getElementById("score").innerHTML = scoreOpponent
-  document.getElementById("winner").innerHTML = result;
+  document.getElementById( "scoreCPU" ).innerHTML = scoreCPU
+  document.getElementById( "score" ).innerHTML = scoreOpponent
+  document.getElementById( "winner" ).innerHTML = result;
 
-  if ( scoreOpponent === 3) {
+  if ( scoreOpponent === 3 ) {
     wonGames ++;
-    finalWinner(playerName);
+    finalWinner( playerName );
   } else if ( scoreCPU === 3) {
-    finalWinner("Opponent");
+    finalWinner( "Opponent" );
   }
 }
 
-function finalWinner(winner) {
+function finalWinner( winner ) {
   setTimeout( () => {
-    window.alert( winner +" wins the match !");
+    window.alert( winner +" wins the match !" );
     playedGames ++
     updateStats();
     reset();
-  }, 10)
+  }, 10 )
 }
 
 function updateStats() {
-  gamesRatio =Math.round((100 * wonGames) / playedGames);
-  document.getElementById("spanPlayedGames").innerHTML = playedGames;
-  document.getElementById("spanWonGames").innerHTML = wonGames;
-  document.getElementById("spanRatio").innerHTML = gamesRatio;
-  localStorage.setItem("storedPlayedGames", playedGames); 
-  localStorage.setItem("storedWonGames", wonGames);
-  localStorage.setItem("storedGamesRatio", gamesRatio);  
-}
-
-function eraseAllData() {
-  localStorage.clear();
-  document.location.reload(true);
+  gamesRatio =Math.round( ( 100 * wonGames ) / playedGames );
+  document.getElementById( "spanPlayedGames" ).innerHTML = playedGames;
+  document.getElementById( "spanWonGames" ).innerHTML = wonGames;
+  document.getElementById( "spanRatio" ).innerHTML = gamesRatio;
+  localStorage.setItem( "storedPlayedGames", playedGames ); 
+  localStorage.setItem( "storedWonGames", wonGames );
+  localStorage.setItem( "storedGamesRatio", gamesRatio );  
 }
 
 const CPUScreenHTML = `<div>
@@ -114,12 +113,12 @@ const CPUScreenHTML = `<div>
     <div id="scoreCPU" class="scores">0</div>
   </div>`
 
-const onePlayerScreenContent = (type) => {
+const onePlayerScreenContent = ( type ) => {
   let randomDisplay;
   let elementsDisplay;
   let challenger;
 
-  if ( type.substring(0,3) === "CPU" ) {
+  if ( type.substring( 0,3 ) === "CPU" ) {
     randomDisplay = "flex";
     elementsDisplay = "none";
     challenger = playerName + "'s computer";
@@ -130,18 +129,23 @@ const onePlayerScreenContent = (type) => {
   }
 
   return (`<div>
-    <p>${challenger}</p>
-    <div id="elementsButtons" style="display: ${elementsDisplay}">
-      <button id='rock' name='rock'  onclick="game('rock')">Rock</button>
-      <button id='paper' name='paper' onclick="game('paper')">Paper</button>
-      <button id='scissors' name='scissors' onclick="game('scissors')">
+
+    <p>${ challenger }</p>
+
+    <div id="elementsButtons" style="display: ${ elementsDisplay }">
+      <button id='rock' name='rock'  onclick="game( 'rock' )">Rock</button>
+      <button id='paper' name='paper' onclick="game( 'paper' )">Paper</button>
+      <button id='scissors' name='scissors' onclick="game( 'scissors' )">
         Scissors
       </button>
     </div>
-    <button id='random' name='random' style="display: ${randomDisplay}" onclick="game()">
+
+    <button id='random' name='random' style="display: ${ randomDisplay }" onclick="game()">
       GO !
     </button>
+
     <div id="score" class="scores">0</div>
+
   </div>`
   );
 }
@@ -184,38 +188,39 @@ const homePage = `<div>
 
   </div>`
 
-document.addEventListener("DOMContentLoaded", () => {
-  let modePlayer = document.getElementById("playerVsCpu");
-  let modeCpu = document.getElementById("cpuVsCpu");
-  let onePlayerScreen = document.getElementById("onePlayerScreen");
-  let CPUScreen = document.getElementById("CPUScreen");
+document.addEventListener( "DOMContentLoaded", () => {
+  let modePlayer = document.getElementById( "playerVsCpu" );
+  let modeCpu = document.getElementById( "cpuVsCpu" );
+  let onePlayerScreen = document.getElementById( "onePlayerScreen" );
+  let CPUScreen = document.getElementById( "CPUScreen" );
 
-  modePlayer.addEventListener('click', () => {
-    startNewGame(playerName)
+  modePlayer.addEventListener( 'click', () => {
+    startNewGame( playerName )
   })
 
-  modeCpu.addEventListener('click', () => {
-    startNewGame("CPU")
+  modeCpu.addEventListener( 'click', () => {
+    startNewGame( "CPU" )
   })
 
-  if ( localStorage.getItem("storedPlayerName")) {
-    playerName = localStorage.getItem("storedPlayerName");
-//    window.alert("Welcome back " + playerName + " !");
-    document.getElementById("playerNameHTML").innerHTML = playerName + "'s games stats"
+  if ( localStorage.getItem( "storedPlayerName" )) {
+    playerName = localStorage.getItem( "storedPlayerName" );
+    window.alert( "Welcome back " + playerName + " !" );
+    document.getElementById( "playerNameHTML" ).innerHTML = playerName + "'s games stats"
 
-    if ( localStorage.getItem("storedPlayedGames")) {
-      playedGames = localStorage.getItem("storedPlayedGames");
-      wonGames = localStorage.getItem("storedWonGames");
-      gamesRatio = localStorage.getItem("storedGamesRatio");
+    if ( localStorage.getItem( "storedPlayedGames" )) {
+      playedGames = localStorage.getItem( "storedPlayedGames" );
+      wonGames = localStorage.getItem( "storedWonGames" );
+      gamesRatio = localStorage.getItem( "storedGamesRatio" );
 
-      document.getElementById("spanPlayedGames").innerHTML = playedGames;
-      document.getElementById("spanWonGames").innerHTML = wonGames;
-      document.getElementById("spanRatio").innerHTML = gamesRatio;
+      document.getElementById( "spanPlayedGames" ).innerHTML = playedGames;
+      document.getElementById( "spanWonGames" ).innerHTML = wonGames;
+      document.getElementById( "spanRatio" ).innerHTML = gamesRatio;
     }
+    
   } else {
-    playerName = window.prompt("What's your name ?");
-    localStorage.setItem("storedPlayerName", playerName)
-    document.getElementById("playerNameHTML").innerHTML = playerName + "'s games stats"
+    playerName = window.prompt( "What's your name ?" );
+    localStorage.setItem( "storedPlayerName", playerName )
+    document.getElementById( "playerNameHTML" ).innerHTML = playerName + "'s games stats"
   }
 
 })

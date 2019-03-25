@@ -63,10 +63,13 @@ button {
   margin: 4px;
   position: relative;
   z-index: 2;
+  margin: auto;
+  margin-top: 5px;
 }
 
 img {
   width: 10vw;
+  min-width: 70px;
   height: auto;
   margin-left: 5px;
   vertical-align: bottom;
